@@ -1,0 +1,106 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --space: calc(.20rem + 1vw);
+    --calculator-background: #242424;
+    --calculator-foreground: #f9f9f9;
+    --box-shadow: rgba(0, 0, 0, 1) 0px 1px 4px ;
+    --help-size: calc(1.2rem + 1vw);
+    --action-color: #238dc9;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.calculator {
+    min-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space);
+    row-gap: var(--space);
+    background-color: var(--calculator-background);
+    color: var(--calculator-foreground);
+}
+
+.display {
+    flex: .5;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: var(--box-shadow);
+}
+
+.display .help {
+    position: absolute;
+    top: var(--space);
+    left: var(--space);
+    width: var(--help-size);
+    height: var(--help-size);
+    border: none;
+    border-radius: 50%;
+    background-color: var(--action-color);
+    color: inherit;
+    font-size: calc(.8rem + 1vmin);
+    cursor: pointer;
+}
+
+.display .result-container {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.display .result-container .result {
+    align-self: flex-end;
+    font-size: calc(6rem + 3vmin);
+    font-weight: bold;
+}
+
+.display .history {
+    font-size: calc(1.2rem + 1.5vmin);
+    text-align: right;
+    padding: var(--space);
+}
+
+.keyboard {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space);
+}
+
+.keyboard .row {
+    flex: 1;
+    display: flex;
+    column-gap: var(--space);
+}
+
+.keyboard .row button {
+    flex: 1 0 calc(25% - var(--space));
+    border: none;
+    border-radius: 0;
+    box-shadow: rgba(0, 0, 0, 1) 0px 1px 4px;
+    background-color: transparent;
+    color: inherit;
+    font-size: calc(2.5rem + 2.5vmin);
+    cursor: pointer;
+    transition: background-color .2s;
+}
+
+.keyboard .row button.operator {
+    color: var(--action-color);
+}
+
+.keyboard .row button:hover {
+    background-color: #383838;
+}
+
+.keyboard .row button[data-action="0"] {
+    flex: 1 0 calc(50% - var(--space));
+}
