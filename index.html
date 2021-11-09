@@ -11,67 +11,62 @@
         <div class="display">
             <button class="help">?</button>
             <div class="result-container">
-                <span class="result">81</span>
+                <span class="result">0</span>
             </div>
-            <div class="history">9 * 9 = </div>
+            <div class="history">&nbsp;</div>
         </div>
         <div class="keyboard">
             <div class="row">
-                <button data-action="all-clear" type="button">AC</button>
-                <button data-action="last-clear" type="button">LC</button>
-                <button class="operator" data-action="positive-negative" type="button">+/-</button>
-                <button class="operator" data-action="divide" type="button">/</button>
+                <button data-type="action"
+                        data-value="ac">AC</button>
+                <button 
+                        data-type="action"
+                        data-value="lc">&#9003;</button>
+                <button data-type="action"
+                        data-value="+/-">&PlusMinus;</button>
+                <button data-type="operator"
+                        data-value="/">&divide;</button>
             </div>
             <div class="row">
-                <button data-action="7" type="button">7</button>
-                <button data-action="8" type="button">8</button>
-                <button data-action="9" type="button">9</button>
-                <button class="operator" data-action="multiply" type="button">X</button>
+                <button data-type="operand"
+                        data-value="7">7</button>
+                <button data-type="operand"
+                        data-value="8">8</button>
+                <button data-type="operand"
+                        data-value="9">9</button>
+                <button data-type="operator"
+                        data-value="X">&times;</button>
             </div>
             <div class="row">
-                <button data-action="4" type="button">4</button>
-                <button data-action="5" type="button">5</button>
-                <button data-action="6" type="button">6</button>
-                <button class="operator" data-action="subtract" type="button">-</button>
+                <button data-type="operand"
+                        data-value="4">4</button>
+                <button data-type="operand"
+                        data-value="5">5</button>
+                <button data-type="operand"
+                        data-value="6">6</button>
+                <button data-type="operator"
+                        data-value="-">&minus;</button>
             </div>
             <div class="row">
-                <button data-action="1" type="button">1</button>
-                <button data-action="2" type="button">2</button>
-                <button data-action="3" type="button">3</button>
-                <button class="operator" data-action="add" type="button">+</button>
+                <button data-type="operand"
+                        data-value="1">1</button>
+                <button data-type="operand"
+                        data-value="2">2</button>
+                <button data-type="operand"
+                        data-value="3">3</button>
+                <button data-type="operator"
+                        data-value="+">&plus;</button>
             </div>
             <div class="row">
-                <button data-action="0" type="button">0</button>
-                <button data-action="decimal" type="button">.</button>
-                <button class="operator" data-action="equal" type="button">=</button>
+                <button data-type="operand"
+                        data-value="0">0</button>
+                <button data-type="operand"
+                        data-value=".">.</button>
+                <button data-type="action"
+                        data-value="=">&equals;</button>
             </div>
         </div>
     </div>
     <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

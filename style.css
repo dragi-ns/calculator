@@ -5,12 +5,13 @@
 }
 
 :root {
-    --space: calc(.20rem + 1vw);
+    --space: calc(.20rem + 1vmin);
     --calculator-background: #242424;
     --calculator-foreground: #f9f9f9;
     --box-shadow: rgba(0, 0, 0, 1) 0px 1px 4px ;
-    --help-size: calc(1.2rem + 1vw);
-    --action-color: #238dc9;
+    --help-size: calc(1.2rem + 1vmin);
+    --operator-color: #238dc9;
+    --action-color: #c0392b;
 }
 
 body {
@@ -44,9 +45,9 @@ body {
     height: var(--help-size);
     border: none;
     border-radius: 50%;
-    background-color: var(--action-color);
+    background-color: var(--operator-color);
     color: inherit;
-    font-size: calc(.8rem + 1vmin);
+    font-size: calc(.8rem + .5vmin);
     cursor: pointer;
 }
 
@@ -58,12 +59,12 @@ body {
 
 .display .result-container .result {
     align-self: flex-end;
-    font-size: calc(6rem + 3vmin);
+    font-size: calc(4rem + 1vmin);
     font-weight: bold;
 }
 
 .display .history {
-    font-size: calc(1.2rem + 1.5vmin);
+    font-size: calc(1rem + 1vmin);
     text-align: right;
     padding: var(--space);
 }
@@ -88,12 +89,16 @@ body {
     box-shadow: rgba(0, 0, 0, 1) 0px 1px 4px;
     background-color: transparent;
     color: inherit;
-    font-size: calc(2.5rem + 2.5vmin);
+    font-size: calc(1.5rem + 1.5vmin);
     cursor: pointer;
     transition: background-color .2s;
 }
 
-.keyboard .row button.operator {
+.keyboard .row button[data-type="operator"] {
+    color: var(--operator-color);
+}
+
+.keyboard .row button[data-type="action"] {
     color: var(--action-color);
 }
 
@@ -101,6 +106,6 @@ body {
     background-color: #383838;
 }
 
-.keyboard .row button[data-action="0"] {
-    flex: 1 0 calc(50% - var(--space));
+.keyboard .row button[data-value="0"] {
+    flex-basis: calc(50% - var(--space));
 }
