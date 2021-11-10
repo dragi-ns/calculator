@@ -1,8 +1,9 @@
 (function IIFE() {
+    const MAX_DISPLAY_LEGNTH = 12;
     const KEY_TO_VALUE = Object.freeze({
         'Backspace': 'lc',
         'Enter': '=',
-        '*': 'X',
+        '*': 'X'
     });
     const OPERATIONS = Object.freeze({
         '+': (leftOperand, rightOperand) => leftOperand + rightOperand,
@@ -22,7 +23,7 @@
         rightOperand: null,
         operator: null
     };
-    
+
     const displayResult = document.querySelector('.display .result');
     updateDisplayResult(state.userValue);
 
@@ -94,7 +95,7 @@
     }
 
     function handleOperand(operand) {
-        if (state.userValue.length > 12) {
+        if (state.userValue.length >= MAX_DISPLAY_LEGNTH) {
             return;
         }
 
@@ -144,7 +145,7 @@
         if (!state.userValue && state.leftOperand !== null && state.leftOperand !== 0) {
             state.leftOperand = -state.leftOperand;
             updateDisplayResult(state.leftOperand);
-        }  else if (state.userValue && state.userValue !== '0') {
+        } else if (state.userValue && state.userValue !== '0') {
             if (!state.userValue.startsWith('-')) {
                 state.userValue = `-${state.userValue}`;
             } else {
@@ -167,10 +168,13 @@
             updateDisplayResult('Cannot calculate');
             return;
         }
-        const roundedResult = Math.round((operationResult + Number.EPSILON) * 100) / 100
-        state.leftOperand = roundedResult;
+        let roundedResult = Math.round((operationResult + Number.EPSILON) * 100) / 100;
+        if (roundedResult.toString().length > MAX_DISPLAY_LEGNTH) {
+            roundedResult = roundedResult.toExponential(2);
+        }
+        state.leftOperand = operationResult;
         state.rightOperand = null;
         state.operator = newOperator;
-        updateDisplayResult(state.leftOperand);
+        updateDisplayResult(roundedResult);
     }
 }());
