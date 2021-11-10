@@ -31,17 +31,28 @@
         history: []
     };
 
-    const displayResult = document.querySelector('.display .result');
-    updateDisplayResult(state.userValue);
-    const displayHistory = document.querySelector('.display .history');
+    const display = document.querySelector('.display');
+    const resultContainer = document.querySelector('.result-container');
+    const resultContainerPadding = parseFloat(
+        getComputedStyle(resultContainer).paddingLeft,
+        10
+    );
+    const result = document.querySelector('.result');
+    const resultBaseFontSize = parseFloat(getComputedStyle(result).fontSize, 10);
+    updateResult(state.userValue);
+    const displayHistory = document.querySelector('.history');
 
     const keyboard = document.querySelector('.keyboard');
     keyboard.addEventListener('click', handleInput);
     document.body.addEventListener('keydown', handleInput);
     document.body.addEventListener('keyup', handleInput);
 
-    function updateDisplayResult(value) {
-        displayResult.textContent = value;
+    function updateResult(value) {
+        result.style.fontSize = `${resultBaseFontSize}px`;
+        result.textContent = value;
+        if (result.clientWidth >= display.clientWidth - resultContainerPadding) {
+            result.style.fontSize = `${resultBaseFontSize - result.textContent.length * 1.5}px`;
+        }
     }
 
     function updateDisplayHistory() {
@@ -138,7 +149,7 @@
                 state.userValue += operand;
             }
         }
-        updateDisplayResult(state.userValue);
+        updateResult(state.userValue);
     }
 
     function allClear() {
@@ -147,7 +158,7 @@
         state.rightOperand = null;
         state.operator = null;
         state.history = [];
-        updateDisplayResult(state.userValue);
+        updateResult(state.userValue);
         updateDisplayHistory();
     }
 
@@ -164,7 +175,7 @@
         } else {
             state.userValue = newUserValue;
         }
-        updateDisplayResult(state.userValue);
+        updateResult(state.userValue);
     }
 
     function toggleSign() {
@@ -174,7 +185,7 @@
             if (state.operator) {
                 state.history.push(UNICODE_OPERATORS[state.operator]);
             }
-            updateDisplayResult(state.leftOperand);
+            updateResult(state.leftOperand);
             updateDisplayHistory();
         } else if (state.userValue && state.userValue !== '0') {
             if (!state.userValue.startsWith('-')) {
@@ -182,7 +193,7 @@
             } else {
                 state.userValue = state.userValue.slice(1);
             }
-            updateDisplayResult(state.userValue);
+            updateResult(state.userValue);
         }
     }
 
@@ -196,7 +207,7 @@
         const operationResult = OPERATIONS[state.operator](state.leftOperand, state.rightOperand);
         if (!Number.isFinite(operationResult)) {
             allClear();
-            updateDisplayResult('Error');
+            updateResult('Error');
             return;
         }
         let roundedResult = Math.round((operationResult + Number.EPSILON) * 100) / 100;
@@ -211,7 +222,7 @@
         }
         state.rightOperand = null;
         state.operator = newOperator;
-        updateDisplayResult(roundedResult);
+        updateResult(roundedResult);
         updateDisplayHistory();
     }
 }());
