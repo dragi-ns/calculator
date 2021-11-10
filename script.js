@@ -29,6 +29,7 @@
     const keyboard = document.querySelector('.keyboard');
     keyboard.addEventListener('click', handleInput);
     document.body.addEventListener('keydown', handleInput);
+    document.body.addEventListener('keyup', handleInput);
 
     function updateDisplayResult(value) {
         displayResult.textContent = value;
@@ -36,15 +37,24 @@
 
     function handleInput(event) {
         let target = null;
-        if (event.type === 'keydown') {
+        if (event.type === 'click') {
+            target = event.target;
+            if (!isValidTarget(target)) {
+                return;
+            }
+        } else {
             const value = KEY_TO_VALUE[event.key] ?? event.key;
             target = document.querySelector(`button[data-value="${value}"]`);
-        } else if (event.type === 'click') {
-            target = event.target;
-        }
+            if (!isValidTarget(target)) {
+                return;
+            }
 
-        if (!target || target.tagName !== 'BUTTON' || !target.dataset.type || !target.dataset.value) {
-            return;
+            if (event.type === 'keyup') {
+                target.classList.remove('active');
+                return;
+            }
+
+            target.classList.add('active');
         }
 
         event.preventDefault();
@@ -60,6 +70,13 @@
         } else {
             console.warn('Invalid target type/value!');
         }
+    }
+
+    function isValidTarget(target) {
+        if (!target || target.tagName !== 'BUTTON' || !target.dataset.type || !target.dataset.value) {
+            return false;
+        }
+        return true;
     }
 
     function handleOperator(operator) {

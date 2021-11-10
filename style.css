@@ -102,6 +102,7 @@ body {
     color: var(--action-color);
 }
 
+.keyboard .row button.active,
 .keyboard .row button:hover {
     background-color: #383838;
 }
