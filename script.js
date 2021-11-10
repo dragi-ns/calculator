@@ -212,9 +212,9 @@
         }
         let roundedResult = Math.round((operationResult + Number.EPSILON) * 100) / 100;
         if (roundedResult.toString().length > MAX_DISPLAY_LEGNTH) {
-            roundedResult = roundedResult.toExponential(2).toString();
+            roundedResult = roundedResult.toExponential(2);
         }
-        state.leftOperand = roundedResult;
+        state.leftOperand = +roundedResult;
         if (!newOperator) {
             state.history.push(state.rightOperand, '=');
         } else {
