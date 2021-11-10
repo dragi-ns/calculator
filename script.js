@@ -49,6 +49,10 @@
     }
 
     function handleInput(event) {
+        if (event.altKey || event.ctrlKey || event.shiftKey) {
+            return;
+        }
+
         let target = null;
         if (event.type === 'click') {
             target = event.target;
