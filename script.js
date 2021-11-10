@@ -1,8 +1,14 @@
 (function IIFE() {
     const MAX_DISPLAY_LEGNTH = 12;
+    const UNICODE_OPERATORS = {
+        '+': '&plus;',
+        '-': '&minus;',
+        '/': '&divide;',
+        'x': '&times;'
+    };
     const KEY_TO_VALUE = Object.freeze({
-        'Backspace': 'lc',
-        'Enter': '=',
+        Backspace: 'lc',
+        Enter: '=',
         '*': 'X'
     });
     const OPERATIONS = Object.freeze({
@@ -21,11 +27,13 @@
         userValue: '0',
         leftOperand: null,
         rightOperand: null,
-        operator: null
+        operator: null,
+        history: []
     };
 
     const displayResult = document.querySelector('.display .result');
     updateDisplayResult(state.userValue);
+    const displayHistory = document.querySelector('.display .history');
 
     const keyboard = document.querySelector('.keyboard');
     keyboard.addEventListener('click', handleInput);
@@ -34,6 +42,10 @@
 
     function updateDisplayResult(value) {
         displayResult.textContent = value;
+    }
+
+    function updateDisplayHistory() {
+        displayHistory.innerHTML = state.history.join(' ') || '&nbsp;';
     }
 
     function handleInput(event) {
@@ -85,13 +97,17 @@
             state.leftOperand = +state.userValue;
             state.userValue = '';
             state.operator = operator;
+            state.history.push(state.leftOperand, UNICODE_OPERATORS[state.operator]);
         } else if (!state.operator) {
             state.operator = operator;
+            state.history = [state.leftOperand, UNICODE_OPERATORS[state.operator]];
         } else if (state.userValue) {
             operate(operator);
         } else {
             state.operator = operator;
+            state.history[1] = UNICODE_OPERATORS[state.operator];
         }
+        updateDisplayHistory();
     }
 
     function handleOperand(operand) {
@@ -101,6 +117,8 @@
 
         if (state.leftOperand !== null && !state.operator) {
             state.leftOperand = null;
+            state.history = [];
+            updateDisplayHistory();
         }
 
         if (operand === '.') {
@@ -124,12 +142,16 @@
         state.leftOperand = null;
         state.rightOperand = null;
         state.operator = null;
+        state.history = [];
         updateDisplayResult(state.userValue);
+        updateDisplayHistory();
     }
 
     function lastClear() {
         if (state.leftOperand !== null && !state.operator) {
             state.leftOperand = null;
+            state.history = [];
+            updateDisplayHistory();
         }
 
         const newUserValue = state.userValue.slice(0, state.userValue.length - 1);
@@ -144,7 +166,12 @@
     function toggleSign() {
         if (!state.userValue && state.leftOperand !== null && state.leftOperand !== 0) {
             state.leftOperand = -state.leftOperand;
+            state.history = [state.leftOperand];
+            if (state.operator) {
+                state.history.push(UNICODE_OPERATORS[state.operator]);
+            }
             updateDisplayResult(state.leftOperand);
+            updateDisplayHistory();
         } else if (state.userValue && state.userValue !== '0') {
             if (!state.userValue.startsWith('-')) {
                 state.userValue = `-${state.userValue}`;
@@ -165,16 +192,22 @@
         const operationResult = OPERATIONS[state.operator](state.leftOperand, state.rightOperand);
         if (!Number.isFinite(operationResult)) {
             allClear();
-            updateDisplayResult('Cannot calculate');
+            updateDisplayResult('Error');
             return;
         }
         let roundedResult = Math.round((operationResult + Number.EPSILON) * 100) / 100;
         if (roundedResult.toString().length > MAX_DISPLAY_LEGNTH) {
-            roundedResult = roundedResult.toExponential(2);
+            roundedResult = roundedResult.toExponential(2).toString();
         }
-        state.leftOperand = operationResult;
+        state.leftOperand = roundedResult;
+        if (!newOperator) {
+            state.history.push(state.rightOperand, '=');
+        } else {
+            state.history = [state.leftOperand, UNICODE_OPERATORS[state.operator]];
+        }
         state.rightOperand = null;
         state.operator = newOperator;
         updateDisplayResult(roundedResult);
+        updateDisplayHistory();
     }
 }());
