@@ -48,10 +48,10 @@
     document.body.addEventListener('keyup', handleInput);
 
     function updateResult(value) {
-        result.style.fontSize = `${resultBaseFontSize}px`;
         result.textContent = value;
+        result.style.fontSize = `${resultBaseFontSize}px`;
         if (result.clientWidth >= display.clientWidth - resultContainerPadding) {
-            result.style.fontSize = `${resultBaseFontSize - result.textContent.length * 1.5}px`;
+            result.style.fontSize = `${resultBaseFontSize - (result.textContent.length * 1.5)}px`;
         }
     }
 

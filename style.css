@@ -5,13 +5,14 @@
 }
 
 :root {
-    --space: calc(.20rem + 1vmin);
     --calculator-background: #242424;
     --calculator-foreground: #f9f9f9;
-    --box-shadow: rgba(0, 0, 0, 1) 0px 1px 4px ;
-    --help-size: calc(1.2rem + 1vmin);
+    --keyboard-hover-color: #383838;
     --operator-color: #238dc9;
     --action-color: #c0392b;
+    --box-shadow: rgba(0, 0, 0, 1) 0px 1px 4px ;
+    --space: calc(.20rem + 1vmin);
+    --help-size: calc(1rem + 1vmin);
 }
 
 body {
@@ -30,7 +31,7 @@ body {
 }
 
 .display {
-    flex: .5;
+    flex: .7;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -42,10 +43,10 @@ body {
     top: var(--space);
     left: var(--space);
     background-color: var(--operator-color);
-    color: inherit;
+    color: #f9f9f9;
     font-size: calc(.8rem + .5vmin);
     font-weight: bold;
-    padding: calc(.5rem + 1vmin);
+    padding: var(--space);
     text-decoration: none;
 }
 
@@ -73,7 +74,7 @@ body {
 
 .display .result-container .result {
     align-self: flex-end;
-    font-size: calc(4rem + 1vmin);
+    font-size: calc(3.5rem + 3vmin);
     font-weight: bold;
 }
 
@@ -100,10 +101,10 @@ body {
     flex: 1 0 calc(25% - var(--space));
     border: none;
     border-radius: 0;
-    box-shadow: rgba(0, 0, 0, 1) 0px 1px 4px;
+    box-shadow: var(--box-shadow);
     background-color: transparent;
     color: inherit;
-    font-size: calc(1.5rem + 1.5vmin);
+    font-size: calc(1rem + 1.5vmax);
     cursor: pointer;
     transition: background-color .2s;
 }
@@ -118,9 +119,29 @@ body {
 
 .keyboard .row button.active,
 .keyboard .row button:hover {
-    background-color: #383838;
+    background-color: var(--keyboard-hover-color);
 }
 
 .keyboard .row button[data-value="0"] {
     flex-basis: calc(50% - var(--space));
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --calculator-background: #f9f9f9;
+        --calculator-foreground: #242424;
+        --keyboard-hover-color: rgba(56, 56, 56, .1);
+        --box-shadow: rgba(0, 0, 0, .2) 0px 1px 4px;
+    }
+}
+
+@media screen and (orientation: landscape) and (min-width: 1920px),
+(orientation: portrait) and (min-width: 720px) {
+    .display .result-container .result {
+        font-size: calc(4.5rem + 5vmin);
+    }
+
+    .keyboard .row button {
+        font-size: calc(2rem + 3vmin);
+    }
 }
