@@ -41,14 +41,27 @@ body {
     position: absolute;
     top: var(--space);
     left: var(--space);
-    width: var(--help-size);
-    height: var(--help-size);
-    border: none;
-    border-radius: 50%;
     background-color: var(--operator-color);
     color: inherit;
     font-size: calc(.8rem + .5vmin);
-    cursor: pointer;
+    font-weight: bold;
+    padding: calc(.5rem + 1vmin);
+    text-decoration: none;
+}
+
+.display .help::after {
+    content: "";
+    width: 0;
+    position: absolute;
+    bottom: calc(.2rem + 1vmin);
+    left: 10%;
+    display: inline-block;
+    border-bottom: .2rem solid white;
+    transition: width .2s;
+}
+
+.display .help:hover::after {
+    width: 80%;
 }
 
 .display .result-container {
